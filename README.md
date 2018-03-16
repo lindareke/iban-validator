@@ -23,7 +23,8 @@ Project page: https://github.com/lindareke/iban-validator
 ```
 
 
-Allowed extentions: .in
+**Important!** Allowed extentions: .in
+
 Input file example: filename.in
 Output file example: filename.out
 
