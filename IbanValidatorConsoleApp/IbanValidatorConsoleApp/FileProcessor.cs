@@ -27,7 +27,8 @@ namespace IbanValidatorConsoleApp
         {
             if (FileHasValidExtention(_inputFile))
             {
-                FileValidator.ValidateFile(_inputFile);
+                string outputFile = OutputFileName(_inputFile);
+                MassIbanValidator.ValidateFile(_inputFile, outputFile);
             }
             else
             {
@@ -55,6 +56,14 @@ namespace IbanValidatorConsoleApp
         //    }
         //    _filesInProgress.Remove(_inputFile);
         //}
+
+        public static string OutputFileName(string inputFile)
+        {
+            string directoryName = Path.GetDirectoryName(inputFile);
+            string filenameWoDir = Path.GetFileNameWithoutExtension(inputFile);
+
+            return directoryName + "\\" + filenameWoDir + ".out";
+        }
 
         private static bool FileHasValidExtention(string fullPath)
         {

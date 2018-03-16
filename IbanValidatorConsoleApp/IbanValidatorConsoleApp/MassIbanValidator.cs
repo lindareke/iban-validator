@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 
 namespace IbanValidatorConsoleApp
 {
-    public class FileValidator
+    public class MassIbanValidator
     {
-        public static void ValidateFile(string inputFileName)
+        public static void ValidateFile(string inputFileName, string outputFileName)
         {
             try
             {
-                string outputFileName = OutputFileName(inputFileName);
-
                 if (File.Exists(outputFileName))
                 {
                     File.Delete(outputFileName);
@@ -42,14 +40,6 @@ namespace IbanValidatorConsoleApp
             {
                 Logger.WriteLine($"Error: Can not create output file for {inputFileName}. Error message: {ex.Message}");
             }
-        }
-
-        public static string OutputFileName(string inputFileName)
-        {
-            string directoryName = Path.GetDirectoryName(inputFileName);
-            string filenameWoDir = Path.GetFileNameWithoutExtension(inputFileName);
-
-            return  directoryName + "\\" + filenameWoDir + ".out";
         }
     }
 }
