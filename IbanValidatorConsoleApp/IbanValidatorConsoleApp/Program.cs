@@ -65,7 +65,7 @@ namespace IbanValidatorConsoleApp
         private static void ProcessFile(string fileName)
         {
             FileProcessor proc = new FileProcessor(fileName);
-            proc.Process();
+            proc.RunProcess();
         }
 
         private static void PrintUsage()
@@ -73,8 +73,8 @@ namespace IbanValidatorConsoleApp
             Logger.WriteLine(@" Usage:
 IbanValidatorConsoleApp.exe -h
 IbanValidatorConsoleApp.exe -q
-IbanValidatorConsoleApp.exe -i (<IBAN>)
-IbanValidatorConsoleApp.exe -f (<file_path>)
+IbanValidatorConsoleApp.exe -i <IBAN>
+IbanValidatorConsoleApp.exe -f <file_path>
 
 Options:
 -h      Show this screen

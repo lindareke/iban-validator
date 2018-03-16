@@ -20,18 +20,23 @@ namespace IbanValidatorConsoleApp
                     File.Delete(outputFileName);
                 }
 
-                using (StreamWriter streamWriter = File.CreateText(outputFileName))
+                using (FileStream fs = File.Create(outputFileName))
                 {
-                    using (StreamReader streamReader = new StreamReader(inputFileName))
+                    using (StreamWriter streamWriter = new StreamWriter(fs))
                     {
-                        string line;
-                        while ((line = streamReader.ReadLine()) != null)
+                        using (StreamReader streamReader = new StreamReader(inputFileName))
                         {
-                            line = $"{line},{IbanValidator.IsValidIban(line).ToString().ToLower()}";
-                            streamWriter.WriteLine(line);
+                            string line;
+                            while ((line = streamReader.ReadLine()) != null)
+                            {
+                                line = $"{line},{IbanValidator.IsValidIban(line).ToString().ToLower()}";
+                                streamWriter.WriteLine(line);
+                            }
                         }
                     }
                 }
+
+                Logger.WriteLine($"Process complete for file {inputFileName}");
             }
             catch (IOException ex)
             {

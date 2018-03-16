@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="Arguments.cs" />
     <Compile Include="FileValidator.cs" />
-    <Compile Include="IbanValidatorOld.cs" />
     <Compile Include="IbanValidator.cs" />
     <Compile Include="FileProcessor.cs" />
     <Compile Include="Logger.cs" />
