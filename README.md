@@ -2,6 +2,9 @@
 
 Console app for single IBAN validation or mass validation
 
+## Application
+https://github.com/lindareke/iban-validator/tree/master/App
+
 ## Usage
 ```
 Usage:
@@ -18,6 +21,11 @@ Options:
 
 Project page: https://github.com/lindareke/iban-validator
 ```
+
+
+Allowed extentions: .in
+Input file example: filename.in
+Output file example: filename.out
 
 ## Tests
 https://github.com/lindareke/iban-validator/tree/master/IbanValidatorConsoleApp/IbanValidatorConsoleApp.Tests
