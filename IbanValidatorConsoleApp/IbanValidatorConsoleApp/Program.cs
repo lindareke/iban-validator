@@ -79,8 +79,8 @@ IbanValidatorConsoleApp.exe -f (<file_path>)
 Options:
 -h      Show this screen
 -q      Quit the application
--i      single IBAN validator
--f      file validator
+-i      Single IBAN validation
+-f      File validation
 
 Project page: https://github.com/lindareke/iban-validator
             ");
