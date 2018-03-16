@@ -16,5 +16,12 @@ namespace IbanValidatorConsoleApp
             }
             return path;
         }
+
+        public static string RemoveWhiteSpaces(string input)
+        {
+            return new string(input.ToCharArray()
+                .Where(c => !Char.IsWhiteSpace(c))
+                .ToArray());
+        }
     }
 }

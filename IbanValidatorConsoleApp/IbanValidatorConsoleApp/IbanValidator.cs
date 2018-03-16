@@ -10,7 +10,7 @@ namespace IbanValidatorConsoleApp
     {
         public static bool IsValidIban(string iban)
         {
-            iban = RemoveWhiteSpaces(iban);
+            iban = Utilities.RemoveWhiteSpaces(iban);
 
             if (!ValidLength(iban))
             {
@@ -47,13 +47,6 @@ namespace IbanValidatorConsoleApp
             checksum = 98 - checksum;
 
             return iban.Substring(2, 2).Equals(checksum < 10 ? ("0" + checksum) : ("" + checksum));
-        }
-
-        private static string RemoveWhiteSpaces(string input)
-        {
-            return new string(input.ToCharArray()
-                .Where(c => !Char.IsWhiteSpace(c))
-                .ToArray());
         }
 
         private static bool ValidLength(string iban)
