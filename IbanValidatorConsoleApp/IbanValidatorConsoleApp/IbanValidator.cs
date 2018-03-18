@@ -77,9 +77,7 @@ namespace IbanValidatorConsoleApp
             {
                 return false;
             }
-
             return true;
         }
-
     }
 }

@@ -9,7 +9,7 @@ namespace IbanValidatorConsoleApp
 {
     public class Program
     {
-        static int Main(string[] args)
+        static void Main(string[] args)
         {
             try
             {
@@ -18,54 +18,34 @@ namespace IbanValidatorConsoleApp
                 if (arguments.Help || args.Length == 0)
                 {
                     PrintUsage();
-                    return 0;
+                //    return 0;
                 }
 
                 if (!string.IsNullOrEmpty(arguments.Error))
                 {
                     Logger.WriteLine($"Error: Invalid arguments: {arguments.Error}");
                     PrintUsage();
-                    return 1;
+                    //return 1;
                 }
 
-                string command = arguments.Command;
-                string parameter = arguments.Parameter;
+                var validator = new ValidatorFactory(arguments.Command, arguments.Parameter).GetValidator();
 
-                if (arguments.Command == "f")
+                if (validator != null)
                 {
-                    if (File.Exists(parameter))
-                    {
-                        ProcessFile(parameter);
-                        return 0;
-                    }
-                    else
-                    {
-                        Logger.WriteLine($"Error: File {parameter} does not exist");
-                        return 1;
-                    }
+                    validator.Process();
                 }
-                else
-                {
-                    CheckIban(arguments.Parameter);
-                    return 0;
-                }
+            //    return 0;
             }
             catch (Exception ex)
             {
                 Logger.WriteLine($"Error: Unrecoverable error: {ex.Message}");
-                return 1;
+            //    return 1;
             }
-        }
 
-        private static void CheckIban(string iban)
-        {
-            Logger.WriteLine($"{iban} number is{(IbanValidator.IsValidIban(iban) ? "" : "not")} a valid IBAN");
-        }
-
-        private static void ProcessFile(string fileName)
-        {
-            FileProcessor proc = new FileProcessor(fileName);
-            proc.RunProcess();
+            while (true)
+            {
+                Console.ReadLine();
+            }
         }
 
         private static void PrintUsage()
