@@ -4,20 +4,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace IbanValidatorConsoleApp
 {
     public class FileValidator : IValidator
     {
         private FileArgs _args;
+
+        private static List<string> _filesInProgress;
+        static FileValidator()
+        {
+            _filesInProgress = new List<string>();
+        }
+
         public FileValidator(FileArgs args)
         {
             _args = args;
         }
 
-        public void Process ()
+        public void Process()
         {
-            string inputFile = _args.FileName;
+                string inputFile = _args.FileName;
+
+            if (_filesInProgress.Contains(inputFile))
+            {
+                Logger.WriteError($"Error: {inputFile} file processing in progress\n");
+                return;
+            }
 
             if (!File.Exists(inputFile))
             {
@@ -27,9 +41,7 @@ namespace IbanValidatorConsoleApp
                 
             if (FileHasValidExtention(inputFile))
             {
-                string outputFile = OutputFileName(inputFile);
-
-                ProcessFile(inputFile, outputFile);
+                StartProcessingTask(inputFile);
             }
             else
             {
@@ -37,23 +49,19 @@ namespace IbanValidatorConsoleApp
             }
         }
 
-        public static string OutputFileName(string inputFile)
+        private async void StartProcessingTask(string inputFile)
         {
-            string directoryName = Path.GetDirectoryName(inputFile);
-            string filenameWoDir = Path.GetFileNameWithoutExtension(inputFile);
+            Logger.WriteLine($"{inputFile} file processing started\n");
 
-            return directoryName + "\\" + filenameWoDir + ".out";
-        }
+            _filesInProgress.Add(inputFile);
 
-        private static bool FileHasValidExtention(string fullPath)
-        {
-            string ext = Path.GetExtension(fullPath).ToLower();
+            string outputFile = OutputFileName(inputFile);
 
-            if (ext == ".in")
-            {
-                return true;
-            }
-            return false;
+            await Task.Run(() => ProcessFile(inputFile, outputFile));
+
+            _filesInProgress.Remove(inputFile);
+
+            Logger.WriteLine($"{inputFile} file processing finished\n");
         }
 
         public static void ProcessFile(string inputFileName, string outputFileName)
@@ -80,39 +88,32 @@ namespace IbanValidatorConsoleApp
                         }
                     }
                 }
-
-                Logger.WriteLine($"Process complete for file {inputFileName}\n");
             }
             catch (IOException ex)
             {
                 Logger.WriteError($"Error: Can not create output file for {inputFileName}. Error message: {ex.Message}\n");
             }
+
+            //Thread.Sleep(10000);
         }
 
-        //private static List<string> _filesInProgress;
-        //static FileProcessor()
-        //{
-        //    _filesInProgress = new List<string>();
-        //}
-        //public bool ProcessFile()
-        //{
-        //    FileValidator.ValidateFile(_inputFile);
-        //}
+        public static string OutputFileName(string inputFile)
+        {
+            string directoryName = Path.GetDirectoryName(inputFile);
+            string filenameWoDir = Path.GetFileNameWithoutExtension(inputFile);
 
-        //public async void DoTask()
-        //{
-        //    Task<bool> task = new Task<bool>(ProcessFile);
-        //    task.Start();
+            return directoryName + "\\" + filenameWoDir + ".out";
+        }
 
-        //    _filesInProgress.Add(_inputFile);
-        //    Console.WriteLine("File {0} processing started ...", _inputFile);
+        private static bool FileHasValidExtention(string fullPath)
+        {
+            string ext = Path.GetExtension(fullPath).ToLower();
 
-        //    bool processed = await task;
-        //    if (processed)
-        //    {              
-        //        Console.WriteLine("File {0} processed", _inputFile);
-        //    }
-        //    _filesInProgress.Remove(_inputFile);
-        //}
+            if (ext == ".in")
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

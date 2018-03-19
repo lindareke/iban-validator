@@ -9,7 +9,7 @@ namespace IbanValidatorConsoleApp
 {
     public class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
             try
             {
@@ -18,14 +18,14 @@ namespace IbanValidatorConsoleApp
                 if (arguments.Help || args.Length == 0)
                 {
                     PrintUsage();
-                //    return 0;
+                   return 0;
                 }
 
                 if (!string.IsNullOrEmpty(arguments.Error))
                 {
                     Logger.WriteError($"Error: Invalid arguments: {arguments.Error} \n");
                     PrintUsage();
-                    //return 1;
+                    return 1;
                 }
 
                 var validator = new ValidatorFactory(arguments.Command, arguments.Parameter).GetValidator();
@@ -37,7 +37,7 @@ namespace IbanValidatorConsoleApp
                 else
                 {
                     Logger.WriteError($"Error: Errord during app execution\n");
-                    //return 1;
+                    return 1;
                 }
 
                 //    return 0;
@@ -45,7 +45,7 @@ namespace IbanValidatorConsoleApp
             catch (Exception ex)
             {
                 Logger.WriteError($"Error: Unrecoverable error: {ex.Message}\n");
-            //    return 1;
+                return 1;
             }
 
             while (true)
