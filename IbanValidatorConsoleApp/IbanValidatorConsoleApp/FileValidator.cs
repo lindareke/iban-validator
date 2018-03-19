@@ -17,16 +17,23 @@ namespace IbanValidatorConsoleApp
 
         public void Process ()
         {
-            string inputFile = _args.Filename;
+            string inputFile = _args.FileName;
+
+            if (!File.Exists(inputFile))
+            {
+                Logger.WriteError($"Error: {inputFile} file does not exist\n");
+                return;
+            }
+                
             if (FileHasValidExtention(inputFile))
             {
                 string outputFile = OutputFileName(inputFile);
 
-                ValidateFile(inputFile, outputFile);
+                ProcessFile(inputFile, outputFile);
             }
             else
             {
-                Logger.WriteLine($"Error: {inputFile} file type is not allowed");
+                Logger.WriteError($"Error: {inputFile} file type is not allowed\n");
             }
         }
 
@@ -41,6 +48,7 @@ namespace IbanValidatorConsoleApp
         private static bool FileHasValidExtention(string fullPath)
         {
             string ext = Path.GetExtension(fullPath).ToLower();
+
             if (ext == ".in")
             {
                 return true;
@@ -48,7 +56,7 @@ namespace IbanValidatorConsoleApp
             return false;
         }
 
-        public static void ValidateFile(string inputFileName, string outputFileName)
+        public static void ProcessFile(string inputFileName, string outputFileName)
         {
             try
             {
@@ -73,11 +81,11 @@ namespace IbanValidatorConsoleApp
                     }
                 }
 
-                Logger.WriteLine($"Process complete for file {inputFileName}");
+                Logger.WriteLine($"Process complete for file {inputFileName}\n");
             }
             catch (IOException ex)
             {
-                Logger.WriteLine($"Error: Can not create output file for {inputFileName}. Error message: {ex.Message}");
+                Logger.WriteError($"Error: Can not create output file for {inputFileName}. Error message: {ex.Message}\n");
             }
         }
 

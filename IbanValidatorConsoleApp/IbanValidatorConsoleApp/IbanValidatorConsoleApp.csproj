@@ -47,10 +47,8 @@
     <Compile Include="FileValidator.cs" />
     <Compile Include="IArgs.cs" />
     <Compile Include="IbanValidator.cs" />
-    <Compile Include="FileProcessor.cs" />
     <Compile Include="IValidator.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="MassIbanValidator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities.cs" />

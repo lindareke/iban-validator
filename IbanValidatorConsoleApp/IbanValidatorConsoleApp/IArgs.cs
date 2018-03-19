@@ -14,12 +14,12 @@ namespace IbanValidatorConsoleApp
     public class FileArgs : IArgs
     {
         public string Type { get; set; }
-        public string Filename { get; set; }
+        public string FileName { get; set; }
 
         public FileArgs(string type, string fileName)
         {
             Type = type;
-            Filename = fileName;
+            FileName = fileName;
         }
     }
 

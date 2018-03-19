@@ -10,7 +10,7 @@ namespace IbanValidatorConsoleApp
     {
         public static bool IsValidIban(string iban)
         {
-            iban = Utilities.RemoveWhiteSpaces(iban);
+            iban = Utilities.RemoveWhiteSpaces(iban).ToUpper();
 
             if (!ValidLength(iban))
             {
@@ -72,7 +72,7 @@ namespace IbanValidatorConsoleApp
             }
 
             //checks length for countries specifized in list, otherwise only checksum
-            string countryCode = iban.Substring(0, 2).ToUpper();
+            string countryCode = iban.Substring(0, 2);
             if (countryLenghts.ContainsKey(countryCode) && iban.Length != countryLenghts[countryCode])
             {
                 return false;

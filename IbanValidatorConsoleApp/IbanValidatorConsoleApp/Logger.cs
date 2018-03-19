@@ -29,5 +29,12 @@ namespace IbanValidatorConsoleApp
 
             Console.Write(message);
         }
+
+        public static void WriteError(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Error.WriteLine(message);
+            Console.ResetColor();
+        }
     }
 }

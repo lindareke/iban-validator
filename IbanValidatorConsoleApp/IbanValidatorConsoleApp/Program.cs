@@ -23,7 +23,7 @@ namespace IbanValidatorConsoleApp
 
                 if (!string.IsNullOrEmpty(arguments.Error))
                 {
-                    Logger.WriteLine($"Error: Invalid arguments: {arguments.Error}");
+                    Logger.WriteError($"Error: Invalid arguments: {arguments.Error} \n");
                     PrintUsage();
                     //return 1;
                 }
@@ -32,13 +32,19 @@ namespace IbanValidatorConsoleApp
 
                 if (validator != null)
                 {
-                    validator.Process();
+                    validator.Process();                  
                 }
-            //    return 0;
+                else
+                {
+                    Logger.WriteError($"Error: Errord during app execution\n");
+                    //return 1;
+                }
+
+                //    return 0;
             }
             catch (Exception ex)
             {
-                Logger.WriteLine($"Error: Unrecoverable error: {ex.Message}");
+                Logger.WriteError($"Error: Unrecoverable error: {ex.Message}\n");
             //    return 1;
             }
 

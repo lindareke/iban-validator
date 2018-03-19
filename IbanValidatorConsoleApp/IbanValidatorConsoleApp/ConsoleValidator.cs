@@ -16,7 +16,7 @@ namespace IbanValidatorConsoleApp
 
         public void Process()
         {
-            Logger.WriteLine($"{_iargs.IbanNumber} number is{(IbanValidator.IsValidIban(_iargs.IbanNumber) ? "" : "not")} a valid IBAN");
+            Logger.WriteLine($"{_iargs.IbanNumber} number is{(IbanValidator.IsValidIban(_iargs.IbanNumber) ? "" : "not")} a valid IBAN\n");
         }
     }
 }
